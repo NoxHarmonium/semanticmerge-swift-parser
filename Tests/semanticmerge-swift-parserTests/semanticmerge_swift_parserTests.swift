@@ -8,10 +8,4 @@ class semanticmerge_swift_parserTests: XCTestCase {
         XCTAssertEqual(semanticmerge_swift_parser().text, "Hello, World!")
     }
 
-
-    static var allTests : [(String, (semanticmerge_swift_parserTests) -> () throws -> Void)] {
-        return [
-            ("testExample", testExample),
-        ]
-    }
 }
