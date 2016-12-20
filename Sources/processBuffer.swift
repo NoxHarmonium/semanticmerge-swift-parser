@@ -1,12 +1,9 @@
 import SourceKittenFramework
 
-func processBuffer(buffer: String) -> String {
+func processBuffer(buffer: String) -> SemanticFile {
     let file = File(contents: buffer)
     let structure = Structure(file: file)
-    let semanticFile = getRootFile(dict: structure.dictionary)
-    dump(semanticFile)
-
-    return ""
+    return getRootFile(dict: structure.dictionary)
 }
 
 func getRootFile(dict: [String: SourceKitRepresentable]) -> SemanticFile {
