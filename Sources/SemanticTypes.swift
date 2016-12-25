@@ -6,7 +6,11 @@ struct SemanticSpan {
     var end: Pair
 }
 
-protocol SemanticType {
+protocol Yamlable {
+    func toYamlString() -> String
+}
+
+protocol SemanticType: Yamlable {
     var type: String { get }
     var name: String { get }
     var locationSpan: SemanticSpan { get }
