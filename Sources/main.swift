@@ -24,6 +24,12 @@ func exitIfEnd(_ value: String) {
   }
 }
 
+func serialiseOutputObject(_ outputObject: SemanticFile) -> String {
+  let serialiser = YamlSerialiser()
+  outputObject.accept(serialiser)
+  return serialiser.buffer
+}
+
 
 let args = CommandLine.arguments
 if !argumentsAreValid(args) {
@@ -48,11 +54,13 @@ for value in iter {
 
   let outputFile = value.trimmingCharacters(in: .whitespacesAndNewlines)
 
-  let buffer = try! String(contentsOfFile: inputFile, encoding: String.Encoding.utf8)
-  let outputObject = processBuffer(buffer: buffer)
-  let serialiser = YamlSerialiser()
-  outputObject.accept(serialiser)
-  let outputString = serialiser.buffer
-  print ("---\n\(serialiser.buffer)")
-  try! outputString.write(toFile: outputFile, atomically: false, encoding: String.Encoding.utf8)
+  do {
+    let buffer = try String(contentsOfFile: inputFile, encoding: String.Encoding.utf8)
+    let outputObject = processBuffer(buffer: buffer)
+    let outputString = serialiseOutputObject(outputObject)
+    try outputString.write(toFile: outputFile, atomically: false, encoding: String.Encoding.utf8)
+    print("OK")
+  } catch {
+    print("KO")
+  }
 }
