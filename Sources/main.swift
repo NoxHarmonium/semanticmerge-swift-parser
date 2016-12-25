@@ -50,7 +50,9 @@ for value in iter {
 
   let buffer = try! String(contentsOfFile: inputFile, encoding: String.Encoding.utf8)
   let outputObject = processBuffer(buffer: buffer)
-  let outputString = outputObject.toYamlString()
-  print ("---\n\(outputString)")
+  let serialiser = YamlSerialiser()
+  outputObject.accept(serialiser)
+  let outputString = serialiser.buffer
+  print ("---\n\(serialiser.buffer)")
   try! outputString.write(toFile: outputFile, atomically: false, encoding: String.Encoding.utf8)
 }
