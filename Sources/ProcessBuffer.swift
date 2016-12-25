@@ -1,15 +1,17 @@
+import Foundation
 import SourceKittenFramework
 
-func processBuffer(buffer: String) -> SemanticFile {
+func processBuffer(buffer: String, filePath: String) -> SemanticFile {
     let file = File(contents: buffer)
     let structure = Structure(file: file)
-    return getRootFile(dict: structure.dictionary)
+    let filename = URL(fileURLWithPath: filePath).lastPathComponent
+    return getRootFile(dict: structure.dictionary, filename: filename)
 }
 
-func getRootFile(dict: [String: SourceKitRepresentable]) -> SemanticFile {
+func getRootFile(dict: [String: SourceKitRepresentable], filename: String) -> SemanticFile {
     return SemanticFile(
         type: "file",
-        name: "<insert filename here>",
+        name: filename,
         locationSpan: SemanticSpan(start: (0, 0), end: (0, 0)),
         footerSpan: (0, -1),
         parsingErrorsDetected: false,

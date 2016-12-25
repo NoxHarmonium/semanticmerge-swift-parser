@@ -56,7 +56,7 @@ for value in iter {
 
   do {
     let buffer = try String(contentsOfFile: inputFile, encoding: String.Encoding.utf8)
-    let outputObject = processBuffer(buffer: buffer)
+    let outputObject = processBuffer(buffer: buffer, filePath: inputFile)
     let outputString = serialiseOutputObject(outputObject)
     try outputString.write(toFile: outputFile, atomically: false, encoding: String.Encoding.utf8)
     print("OK")
