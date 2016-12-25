@@ -17,15 +17,27 @@ func getRootFile(dict: [String: SourceKitRepresentable]) -> SemanticFile {
     )
 }
 
+func isValidNode(_ node: SourceKitRepresentable) -> Bool {
+  guard let dict = node as? [String: SourceKitRepresentable],
+    let _ = dict["key.kind"] as? String,
+    let _ = dict["key.name"] as? String else { return false }
+  return true
+}
+
 func processRepresentableChildren(children: SourceKitRepresentable?) -> [SemanticType]? {
     guard let children = children as? [SourceKitRepresentable] else { return nil }
 
-    return children.map {
+    return children
+      .filter { isValidNode($0) }
+      .map {
         let dict = $0 as! [String: SourceKitRepresentable]
+        let kind = dict["key.kind"] as! String
+        let name = dict["key.name"] as! String
+
         if (isContainer(dict: dict)) {
             return SemanticContainer(
-                type: dict["key.kind"] as! String,
-                name: dict["key.name"] as! String,
+                type: kind,
+                name: name,
                 locationSpan: SemanticSpan(start: (0, 0), end: (0, 0)),
                 headerSpan: (0, 0),
                 footerSpan: (0, 0),
@@ -33,8 +45,8 @@ func processRepresentableChildren(children: SourceKitRepresentable?) -> [Semanti
             )
         } else {
             return SemanticNode(
-                type: dict["key.kind"] as! String,
-                name: dict["key.name"] as! String,
+                type: kind,
+                name: name,
                 locationSpan: SemanticSpan(start: (0, 0), end: (0, 0)),
                 span: (0, 0),
                 children: nil
