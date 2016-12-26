@@ -11,3 +11,9 @@ External Parser Reference
 -------------------------
 
 https://users.semanticmerge.com/documentation/external-parsers/external-parsers-guide.shtml#Externalparsers
+
+
+Licence
+-------
+
+This code is released under the [MIT licence](./LICENCE)
