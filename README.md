@@ -1,6 +1,8 @@
 Semantic Merge Swift Parser
 ===========================
 
+[![Build Status](https://travis-ci.org/NoxHarmonium/semanticmerge-swift-parser.svg?branch=master)](https://travis-ci.org/NoxHarmonium/semanticmerge-swift-parser)
+
 This is my attempt to write a custom parser for Semantic Merge so it can handle the Swift programming language.
 
 It is a very rough prototype so please don't judge the quality of the code too much 😜. I'm in the process of testing it but I can't seem to get Semantic merge to open with languages other than Java, C# or VB.net with the trial version I have.
