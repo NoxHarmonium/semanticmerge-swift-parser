@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 INPUT='Tests/semanticmerge-swift-parserTests/SampleSwiftFiles/ComplexSample.swiftsample'
 OUTPUT="$(mktemp)"
 FLAG_FILE="$(mktemp)"
