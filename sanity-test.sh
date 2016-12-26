@@ -9,3 +9,5 @@ ${INPUT}
 ${OUTPUT}
 end
 EOF
+
+echo "Output to '${OUTPUT}'"

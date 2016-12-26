@@ -83,6 +83,25 @@ internal protocol RootViewModelType {
   var outputs: RootViewModelOutputs { get }
 }
 
+// swiftlint:disable cyclomatic_complexity
+extension TabBarItem: Equatable {}
+func == (lhs: TabBarItem, rhs: TabBarItem) -> Bool {
+  switch (lhs, rhs) {
+  case let (.activity(lhs), .activity(rhs)):
+    return lhs == rhs
+  case let (.dashboard(lhs), .dashboard(rhs)):
+    return lhs == rhs
+  case let (.home(lhs), .home(rhs)):
+    return lhs == rhs
+  case let (.profile(lhs), .profile(rhs)):
+    return lhs.avatarUrl == rhs.avatarUrl && lhs.index == rhs.index
+  case let (.search(lhs), .search(rhs)):
+    return lhs == rhs
+  default: return false
+  }
+}
+// swiftlint:enable cyclomatic_complexity
+
 internal final class RootViewModel: RootViewModelType, RootViewModelInputs, RootViewModelOutputs {
 
   // swiftlint:disable function_body_length
@@ -192,9 +211,6 @@ internal final class RootViewModel: RootViewModelType, RootViewModelInputs, Root
     self.currentUserUpdatedProperty.value = ()
   }
   private let didSelectIndexProperty = MutableProperty(0)
-  internal func didSelectIndex(index: Int) {
-    self.didSelectIndexProperty.value = index
-  }
   private let switchToActivitiesProperty = MutableProperty()
   internal func switchToActivities() {
     self.switchToActivitiesProperty.value = ()
@@ -265,24 +281,7 @@ func == (lhs: TabBarItemsData, rhs: TabBarItemsData) -> Bool {
          lhs.isMember == rhs.isMember
 }
 
-// swiftlint:disable cyclomatic_complexity
-extension TabBarItem: Equatable {}
-func == (lhs: TabBarItem, rhs: TabBarItem) -> Bool {
-  switch (lhs, rhs) {
-  case let (.activity(lhs), .activity(rhs)):
-    return lhs == rhs
-  case let (.dashboard(lhs), .dashboard(rhs)):
-    return lhs == rhs
-  case let (.home(lhs), .home(rhs)):
-    return lhs == rhs
-  case let (.profile(lhs), .profile(rhs)):
-    return lhs.avatarUrl == rhs.avatarUrl && lhs.index == rhs.index
-  case let (.search(lhs), .search(rhs)):
-    return lhs == rhs
-  default: return false
-  }
-}
-// swiftlint:enable cyclomatic_complexity
+
 
 private func first<VC: UIViewController>(viewController: VC.Type) -> ([UIViewController]) -> VC? {
 
